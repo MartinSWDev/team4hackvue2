@@ -120,18 +120,20 @@ export default {
     }
 
     const getPlaces = async () => {
-      const apiKey = ''; // Replace with your actual API key
-      const baseUrl = 'http://localhost:3000/api/places';
+      const apiKey = 'YOUR_GOOGLE_PLACES_API_KEY'; // Replace with your actual Google Places API key
+      const baseUrl = 'https://maps.googleapis.com/maps/api/place/textsearch/json';
 
       try {
-        const response = await fetch(`${baseUrl}?query=${encodeURIComponent(answers.food + ' ' + answers.music + ' in ' + answers.city)}&key=${apiKey}`);
+        const response = await fetch(`${baseUrl}?query=${encodeURIComponent(answers.food + ' ' + answers.music + ' in ' + answers.city)}&key=${apiKey}`, {
+          mode: 'cors' // This might be necessary depending on your setup
+        });
         const data = await response.json();
 
         if (data.status === 'OK') {
           places.value = data.results.slice(0, 3).map((place, index) => ({
             id: index + 1,
             name: place.name,
-            type: 'Place',
+            type: place.types[0] || 'Place',
             location: [place.geometry.location.lat, place.geometry.location.lng]
           }));
 
