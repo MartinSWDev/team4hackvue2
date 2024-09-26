@@ -120,7 +120,7 @@ export default {
     }
 
     const getPlaces = async () => {
-      const apiKey = 'YOUR_GOOGLE_PLACES_API_KEY'; // Replace with your actual Google Places API key
+      const apiKey = import.meta.env.VITE_GOOGLE_PLACES_API_KEY; // Replace with your actual Google Places API key
       const baseUrl = 'https://maps.googleapis.com/maps/api/place/textsearch/json';
 
       try {
